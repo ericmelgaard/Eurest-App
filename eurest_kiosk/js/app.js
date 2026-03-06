@@ -161,8 +161,13 @@ var IMSintegration;
         App.prototype.processMenuItems = function (items) {
             var _this = this;
 
+            // Always remove loading screen and unblur
+            $(".loading").remove();
+            $(".asset-wrapper").removeClass("blur");
+
             if (!items || items.length === 0) {
-                console.log('No menu items available');
+                console.warn('No menu items available - database may be empty');
+                $('.asset-wrapper').html('<div style="color: white; text-align: center; padding: 50px; font-size: 24px;">Loading menu data... Please wait.</div>');
                 return;
             }
 
@@ -203,6 +208,8 @@ var IMSintegration;
 
             this.stations = Object.values(stationsMap);
 
+            console.log('Processed', this.stations.length, 'stations with total items:', items.length);
+
             var integrationItems = {
                 stations: this.stations,
                 iconLabels: {
@@ -217,6 +224,8 @@ var IMSintegration;
 
             if (menuLayout) {
                 menuLayout.init(null, null, null, integrationItems, this.API);
+            } else {
+                console.error('menuLayout is not available!');
             }
         };
 

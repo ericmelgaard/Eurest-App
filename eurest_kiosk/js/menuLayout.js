@@ -163,8 +163,15 @@ var IMSintegration;
 
             _this.clearMenuItems(".asset-wrapper");
 
+            console.log('fillDynamic called with:', {
+                hasIMSItems: !!IMSItems,
+                hasIntegrationItems: !!integrationItems,
+                stationsCount: integrationItems && integrationItems.stations ? integrationItems.stations.length : 0
+            });
+
             if (!integrationItems || !integrationItems.stations || integrationItems.stations.length === 0) {
-                console.log('No integration items provided');
+                console.warn('No integration items provided to menuLayout');
+                $('.asset-wrapper').html('<div style="color: white; text-align: center; padding: 50px; font-size: 24px;">No menu items to display</div>');
                 return;
             }
 
