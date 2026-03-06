@@ -98,6 +98,7 @@ var IMSintegration;
         MenuLayout.prototype.renderStationGrid = function() {
             var _this = this;
             var $wrapper = $(".asset-wrapper");
+            $wrapper.removeClass('blur');
             $wrapper.empty();
 
             var stationsHTML = '<div class="kiosk-container">';
