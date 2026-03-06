@@ -1929,6 +1929,36 @@ var IMSintegration;
                     each.description = each.description.en || "";
                     each.price = each.price.amount ? parseFloat(each.price.amount).toFixed(2) : "";
                     each.calories = each.nutrition.calories ? each.nutrition.calories.amount : "";
+
+                    if (each.nutrition) {
+                        each.nutrition_data = {
+                            calories: each.nutrition.calories ? each.nutrition.calories.amount : 0,
+                            total_fat: each.nutrition.fat ? each.nutrition.fat.amount : 0,
+                            total_fat_dv: each.nutrition.fat ? each.nutrition.fat.daily_value : 0,
+                            saturated_fat: each.nutrition.saturated_fat ? each.nutrition.saturated_fat.amount : 0,
+                            saturated_fat_dv: each.nutrition.saturated_fat ? each.nutrition.saturated_fat.daily_value : 0,
+                            trans_fat: each.nutrition.trans_fat ? each.nutrition.trans_fat.amount : 0,
+                            cholesterol: each.nutrition.cholesterol ? each.nutrition.cholesterol.amount : 0,
+                            cholesterol_dv: each.nutrition.cholesterol ? each.nutrition.cholesterol.daily_value : 0,
+                            sodium: each.nutrition.sodium ? each.nutrition.sodium.amount : 0,
+                            sodium_dv: each.nutrition.sodium ? each.nutrition.sodium.daily_value : 0,
+                            total_carbohydrate: each.nutrition.carbs ? each.nutrition.carbs.amount : 0,
+                            total_carbohydrate_dv: each.nutrition.carbs ? each.nutrition.carbs.daily_value : 0,
+                            dietary_fiber: each.nutrition.fiber ? each.nutrition.fiber.amount : 0,
+                            dietary_fiber_dv: each.nutrition.fiber ? each.nutrition.fiber.daily_value : 0,
+                            total_sugars: each.nutrition.sugar ? each.nutrition.sugar.amount : 0,
+                            protein: each.nutrition.protein ? each.nutrition.protein.amount : 0,
+                            vitamin_d: each.nutrition.vitamin_d ? each.nutrition.vitamin_d.amount : 0,
+                            vitamin_d_dv: each.nutrition.vitamin_d ? each.nutrition.vitamin_d.daily_value : 0,
+                            calcium: each.nutrition.calcium ? each.nutrition.calcium.amount : 0,
+                            calcium_dv: each.nutrition.calcium ? each.nutrition.calcium.daily_value : 0,
+                            iron: each.nutrition.iron ? each.nutrition.iron.amount : 0,
+                            iron_dv: each.nutrition.iron ? each.nutrition.iron.daily_value : 0,
+                            potassium: each.nutrition.potassium ? each.nutrition.potassium.amount : 0,
+                            potassium_dv: each.nutrition.potassium ? each.nutrition.potassium.daily_value : 0
+                        };
+                    }
+
                     each.sortOrder = each.meta.menu_sort_number || 0;
                     each.out_of_stock = each.is.out_of_stock || false;
                     each.featured = each.is.featured || false;

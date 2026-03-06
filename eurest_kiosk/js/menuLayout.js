@@ -230,8 +230,8 @@ var IMSintegration;
                 $('#allergens-section').hide();
             }
 
-            if (item.nutrition) {
-                var n = item.nutrition;
+            if (item.nutrition_data) {
+                var n = item.nutrition_data;
                 $('#nutrition-serving').text('Serving Size ' + (item.serving_size || '1 serving'));
                 $('#nutrition-calories').text(n.calories || '0');
                 $('#nutrition-fat').text(n.total_fat || '0');
