@@ -233,6 +233,7 @@ var IMSintegration;
                     }
 
                     each.nutritionObj = each;
+                    each.nutritionJson = JSON.stringify(each);
                 });
 
                 var formattedStationData = {
