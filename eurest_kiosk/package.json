@@ -2,11 +2,11 @@
   "name": "wand-digital-asset",
   "version": "1.0.0",
   "description": "A digital asset project by Wand Digital.",
-  "main": "js/app.js",
+  "type": "module",
   "scripts": {
-    "dev": "http-server .",
-    "build": "rm -rf dist && mkdir dist && cp -r css fonts js media resources index.html .env dist/ 2>/dev/null || true",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "Wand Digital",
@@ -19,6 +19,6 @@
     "mustache": "^4.2.0"
   },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "vite": "^5.0.0"
   }
 }
