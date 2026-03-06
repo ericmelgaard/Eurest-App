@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse our meal stations and discover nutritious, delicious menu items with complete nutritional information.">
+    <title>Digital Menu</title>
+    <link rel="icon" type="image/x-icon" href="resources/favicon.ico">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="app-header">
+        <div class="container header-content">
+            <div id="nav-container" class="nav-container">
+                <div class="business-unit-display">
+                    <div class="business-unit-label">Business Unit</div>
+                    <div id="business-unit-name" class="business-unit-name">Not Selected</div>
+                </div>
+
+                <div class="nav-separator"></div>
+
+                <div id="quick-venue-dropdown" class="quick-venue-dropdown">
+                    <button id="venue-button" class="venue-button" aria-label="Select venue">
+                        <span id="venue-button-text">Select Venue</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </button>
+                    <div id="venue-dropdown-list" class="venue-dropdown-list"></div>
+                </div>
+
+                <button id="nav-modal-icon" class="nav-modal-icon" aria-label="Open navigation menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="quick-date-dropdown" class="quick-date-dropdown">
+                <button id="date-button" class="date-button" aria-label="Select date">
+                    <span id="date-button-text">Today</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                <div id="date-dropdown-list" class="date-dropdown-list">
+                    <div class="date-quick-options"></div>
+                    <div class="date-divider"></div>
+                    <div class="date-calendar-option">
+                        <label for="menu-date-picker" class="calendar-label">Select Other Date</label>
+                        <input type="date" id="menu-date-picker" class="calendar-picker" aria-label="Select menu date">
+                    </div>
+                </div>
+            </div>
+
+            <button id="back-to-stations" class="floating-home" aria-label="Return to stations">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Back to Stations</span>
+            </button>
+        </div>
+    </header>
+
+    <div id="nav-modal" class="nav-modal">
+        <div id="nav-modal-overlay" class="nav-modal-overlay"></div>
+        <div class="nav-modal-content">
+            <div class="nav-modal-header">
+                <h2 class="nav-modal-title">Navigation</h2>
+                <button id="nav-modal-close" class="nav-modal-close" aria-label="Close navigation">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="nav-modal-body">
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Business Units</h3>
+                    <div class="nav-search-container">
+                        <svg class="nav-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="sap-code-search" class="nav-search" placeholder="Search business units..." aria-label="Search business units">
+                    </div>
+                    <div class="nav-current-selection">
+                        <div class="nav-selection-label">Selected:</div>
+                        <div id="selected-sap-code-display" class="nav-selection-value">No Business Unit Selected</div>
+                    </div>
+                    <div id="sap-codes-list" class="nav-list"></div>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Venues</h3>
+                    <div class="nav-search-container">
+                        <svg class="nav-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="venue-search" class="nav-search" placeholder="Search venues..." aria-label="Search venues">
+                    </div>
+                    <div class="nav-current-selection">
+                        <div class="nav-selection-label">Selected:</div>
+                        <div id="selected-venue-display" class="nav-selection-value">No Venue Selected</div>
+                    </div>
+                    <div id="venues-list" class="nav-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content" class="main-content">
+        <div id="landing-view" class="view active">
+            <div class="container">
+                <div class="view-header">
+                    <h2 class="view-title">Explore Our Stations</h2>
+                    <p class="view-subtitle">Choose a station to view available menu items</p>
+                </div>
+                <div id="stations-grid" class="stations-grid" role="list">
+                    <div class="loading-skeleton">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="station-view" class="view">
+            <div class="container">
+                <div class="view-header">
+                    <h2 id="station-title" class="view-title"></h2>
+                    <p id="station-description" class="view-subtitle"></p>
+                </div>
+                <div id="menu-items-grid" class="menu-items-grid" role="list">
+                    <div class="loading-skeleton">
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <div id="item-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-title" class="modal-title"></h2>
+                <button id="modal-close" class="icon-button" aria-label="Close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-meta">
+                    <div class="item-quick-info">
+                        <span id="modal-price" class="item-price"></span>
+                        <span id="modal-calories" class="item-calories"></span>
+                        <span id="modal-serving" class="item-serving"></span>
+                    </div>
+                    <div id="modal-icons" class="item-icons"></div>
+                </div>
+                <p id="modal-description" class="item-description"></p>
+
+                <section class="item-section">
+                    <h3 class="section-title">Ingredients</h3>
+                    <p id="modal-ingredients" class="ingredients-list"></p>
+                </section>
+
+                <section class="item-section" id="allergens-section">
+                    <h3 class="section-title">Allergens</h3>
+                    <p id="modal-allergens" class="allergens-list"></p>
+                </section>
+
+                <section class="item-section">
+                    <h3 class="section-title">Nutrition Facts</h3>
+                    <div class="nutrition-label">
+                        <div class="nutrition-header">
+                            <div class="nutrition-title-group">
+                                <h4 class="nutrition-title">Nutrition Facts</h4>
+                                <p id="nutrition-serving" class="nutrition-serving"></p>
+                            </div>
+                        </div>
+                        <div class="nutrition-divider thick"></div>
+
+                        <div class="nutrition-row major">
+                            <span class="nutrition-label-text">Calories</span>
+                            <span id="nutrition-calories" class="nutrition-value bold"></span>
+                        </div>
+                        <div class="nutrition-divider"></div>
+
+                        <div class="nutrition-row daily-value-header">
+                            <span></span>
+                            <span class="nutrition-value bold">% Daily Value*</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+
+                        <div class="nutrition-row">
+                            <span class="nutrition-label-text"><strong>Total Fat</strong> <span id="nutrition-fat"></span>g</span>
+                            <span class="nutrition-value bold"><span id="nutrition-fat-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+                        <div class="nutrition-row indent">
+                            <span class="nutrition-label-text">Saturated Fat <span id="nutrition-sat-fat"></span>g</span>
+                            <span class="nutrition-value bold"><span id="nutrition-sat-fat-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+                        <div class="nutrition-row indent">
+                            <span class="nutrition-label-text">Trans Fat <span id="nutrition-trans-fat"></span>g</span>
+                            <span class="nutrition-value"></span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+
+                        <div class="nutrition-row">
+                            <span class="nutrition-label-text"><strong>Cholesterol</strong> <span id="nutrition-cholesterol"></span>mg</span>
+                            <span class="nutrition-value bold"><span id="nutrition-cholesterol-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+
+                        <div class="nutrition-row">
+                            <span class="nutrition-label-text"><strong>Sodium</strong> <span id="nutrition-sodium"></span>mg</span>
+                            <span class="nutrition-value bold"><span id="nutrition-sodium-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+
+                        <div class="nutrition-row">
+                            <span class="nutrition-label-text"><strong>Total Carbohydrate</strong> <span id="nutrition-carbs"></span>g</span>
+                            <span class="nutrition-value bold"><span id="nutrition-carbs-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+                        <div class="nutrition-row indent">
+                            <span class="nutrition-label-text">Dietary Fiber <span id="nutrition-fiber"></span>g</span>
+                            <span class="nutrition-value bold"><span id="nutrition-fiber-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+                        <div class="nutrition-row indent">
+                            <span class="nutrition-label-text">Total Sugars <span id="nutrition-sugars"></span>g</span>
+                            <span class="nutrition-value"></span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+
+                        <div class="nutrition-row">
+                            <span class="nutrition-label-text"><strong>Protein</strong> <span id="nutrition-protein"></span>g</span>
+                            <span class="nutrition-value"></span>
+                        </div>
+                        <div class="nutrition-divider thick"></div>
+
+                        <div class="nutrition-row micronutrient">
+                            <span class="nutrition-label-text">Vitamin D <span id="nutrition-vitamin-d"></span>mcg</span>
+                            <span class="nutrition-value"><span id="nutrition-vitamin-d-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+                        <div class="nutrition-row micronutrient">
+                            <span class="nutrition-label-text">Calcium <span id="nutrition-calcium"></span>mg</span>
+                            <span class="nutrition-value"><span id="nutrition-calcium-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+                        <div class="nutrition-row micronutrient">
+                            <span class="nutrition-label-text">Iron <span id="nutrition-iron"></span>mg</span>
+                            <span class="nutrition-value"><span id="nutrition-iron-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thin"></div>
+                        <div class="nutrition-row micronutrient">
+                            <span class="nutrition-label-text">Potassium <span id="nutrition-potassium"></span>mg</span>
+                            <span class="nutrition-value"><span id="nutrition-potassium-dv"></span>%</span>
+                        </div>
+                        <div class="nutrition-divider thick"></div>
+
+                        <div class="nutrition-footnote">
+                            * Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-message" class="error-banner" role="alert" hidden>
+        <p id="error-text"></p>
+        <button id="error-close" class="error-close" aria-label="Close error message">×</button>
+    </div>
+
+    <div id="timeout-warning" class="timeout-warning" hidden>
+        <div class="timeout-overlay"></div>
+        <div class="timeout-content">
+            <div class="timeout-icon">
+                <svg class="timeout-circle" width="120" height="120" viewBox="0 0 120 120">
+                    <circle class="timeout-circle-bg" cx="60" cy="60" r="54" fill="none" stroke="#2d3748" stroke-width="8"/>
+                    <circle class="timeout-circle-progress" cx="60" cy="60" r="54" fill="none" stroke="#3b82f6" stroke-width="8" stroke-linecap="round"/>
+                </svg>
+                <div class="timeout-seconds" id="timeout-seconds">10</div>
+            </div>
+            <h2 class="timeout-title">Are you still browsing?</h2>
+            <p class="timeout-message">You'll be returned to the home screen in <span id="timeout-countdown">10</span> seconds</p>
+            <div class="timeout-actions">
+                <button id="timeout-continue" class="btn-primary-large">Continue Browsing</button>
+                <button id="timeout-home" class="btn-secondary-large">Return to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top" hidden>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

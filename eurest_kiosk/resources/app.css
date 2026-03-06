@@ -1,0 +1,557 @@
+/*materical icons*/
+/*v5.6.01*/
+
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url(MaterialIcons.woff2) format("woff2");
+}
+
+/*basic document styles*/
+html {
+    overflow: visible;
+}
+
+body {
+    overflow: hidden;
+}
+
+/*scaling support*/
+body {
+    transform-origin: top left;
+}
+
+
+/*loading styles*/
+.loading {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+    font-family: roboto;
+    font-size: 45px;
+    background-color: rgba(0, 0, 0, 0.6)
+}
+
+.blur {
+    filter: blur(3px);
+}
+
+.loading-wrapper {
+    color: transparent;
+}
+
+.loading img {
+    height: 128px;
+    width: 128px;
+}
+
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+
+.spin::before {
+    animation: spinner 1.5s linear infinite;
+    animation-play-state: inherit;
+    border: solid 22px rgba(255, 255, 255, .0);
+    border-bottom-color: #8fd8f8;
+    border-radius: 50%;
+    content: "";
+    content: "";
+    height: 120px;
+    width: 120px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    will-change: transform;
+    box-shadow: 3px 3px 10px 0px rgba(143, 216, 248, 0.75);
+    box-sizing: border-box;
+}
+
+/*When developing digital assets it is common practice to comment out the overflow tag. Re-enable before any testing is done.*/
+
+.material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: "liga";
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}
+
+.material-icons.connect {
+    font-size: 18px;
+}
+
+/*Required for IMS formatted Text*/
+
+p {
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.error-wrapper {
+    display: flex;
+    margin: 10% 0px 0px 10%;
+    padding: 0px;
+    width: 80%;
+    height: 80%;
+    border-radius: 10%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.error {
+    height: 50%;
+}
+
+.error-message {
+    display: flex;
+    cursor: pointer;
+    justify-content: space-between;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 25px;
+    max-width: 50%;
+    padding: 25px;
+    font-size: 28px;
+    line-height: 34px;
+    box-shadow: 25px 10px 25px -10px rgba(0, 0, 0, 0.75);
+}
+
+.connectError {
+    padding: 5px 15px 5px 15px;
+    margin: 10px 0px 0px 0px;
+    background-color: white;
+    border: solid 3px black;
+    border-radius: 20px;
+    font-size: 22px;
+}
+
+.connectError .material-icons {
+    color: #c90000;
+}
+
+.connectError.success .material-icons {
+    color: green;
+}
+
+.connectError .message {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    color: black;
+    align-items: center;
+}
+
+.connectError .url {
+    text-decoration: underline;
+}
+
+.connectError .error-desc {
+    margin: 0px 10px 0px 0px;
+    letter-spacing: -2px;
+}
+
+.visible {
+    visibility: visible;
+}
+
+/*cursors*/
+.qu {
+    cursor: url(.//logo_32.png), auto;
+}
+
+.revel {
+    cursor: url(.//revel_32.png), auto;
+}
+
+.ims {
+    cursor: url(.//IMS_32.png), auto;
+}
+
+.toast {
+    cursor: url(.//toast_32.png), auto;
+}
+
+.par {
+    cursor: url(.//PAR-Logo-NB-blue.png), auto;
+}
+
+.simphony {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='21' viewBox='0 0 32 21'><path fill='%23C74634' d='M9.9,20.1c-5.5,0-9.9-4.4-9.9-9.9c0-5.5,4.4-9.9,9.9-9.9h11.6c5.5,0,9.9,4.4,9.9,9.9c0,5.5-4.4,9.9-9.9,9.9H9.9 M21.2,16.6c3.6,0,6.4-2.9,6.4-6.4c0-3.6-2.9-6.4-6.4-6.4h-11c-3.6,0-6.4,2.9-6.4,6.4s2.9,6.4,6.4,6.4H21.2'/></svg>") 0 0, auto;
+}
+
+.shift4 {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 64 64'><path d='M32 0C14.355 0 0 14.355 0 32s14.355 32 32 32 32-14.355 32-32S49.645 0 32 0Z' fill='%23136EF6'/><path d='M35.79 13.715 18.088 36.422a.526.526 0 0 0-.115.333v2.605c0 .3.243.544.544.544h15.82c.301 0 .544.243.544.544v9.171c0 .3.244.544.544.544h3.373c.301 0 .544-.243.544-.544V14.048c0-.3-.243-.544-.544-.544h-2.573a.543.543 0 0 0-.435.211ZM23.944 34.982l9.965-12.716c.32-.404.973-.18.973.332v12.717c0 .3-.244.544-.544.544h-9.972a.54.54 0 0 1-.422-.877Z' fill='%23fff'/></svg>") 16 16, auto;
+}
+
+.webtrition {
+    cursor: url(.//webt_32.png), auto;
+}
+
+/* status wrapper */
+
+.connect {
+    cursor: pointer;
+}
+
+.status-wrapper {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 5px;
+    left: 5px;
+    width: 100%;
+    z-index: 1000;
+}
+
+/*loading wrapper*/
+
+.loading-wrapper {
+    position: absolute;
+    text-align: center;
+    font-size: 32px;
+    color: rgba(0, 0, 0, 0.87);
+    border-radius: 3px;
+    height: 150px;
+    margin-top: 280px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "roboto";
+    color: white;
+
+}
+
+/*rotate styles.. needs review*/
+.rotate-group {
+    overflow: hidden;
+}
+
+.target.items-wrapper {
+    flex-wrap: nowrap;
+}
+
+.rotation-wrapper {}
+
+.rotate-group {
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
+/*loading animation*/
+
+.spinner {
+    display: inline-flex;
+    align-items: baseline;
+    margin: auto;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.spinner .bounce1 {
+    -webkit-animation-delay: -.32s;
+    animation-delay: -.32s;
+}
+
+.spinner .bounce2 {
+    -webkit-animation-delay: -.16s;
+    animation-delay: -.16s;
+}
+
+.spinner>div {
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    display: inline-block;
+}
+
+@keyframes sk-bouncedelay {
+
+    0%,
+    100%,
+    80% {
+        opacity: 100%;
+    }
+
+    40% {
+        opacity: 0%;
+    }
+}
+
+/*refresh animation*/
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.blink {
+    animation: blink 1s ease-in-out infinite;
+}
+
+/*app options styling*/
+/* Options Menu Styles - Tailwind-like but pure CSS */
+
+/* Container for the options menu */
+.options-container {
+    position: fixed;
+    z-index: 50;
+    font-family: system-ui, -apple-system, sans-serif;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Hidden state for options container */
+.options-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Options button styling */
+.options-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.options-button:hover {
+    background-color: rgba(143, 216, 248, 0.9);
+    transform: scale(1.05);
+}
+
+.options-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Dropdown menu styling */
+.options-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: 12rem;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: all 0.2s ease;
+}
+
+/* Show dropdown */
+.options-dropdown.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* Dropdown items */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.dropdown-item svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+}
+
+.dropdown-item span {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.fallback-wrapper {
+    position: absolute;
+    transform-origin: top left;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 10000;
+}
+
+/* Light/dark mode support */
+@media (prefers-color-scheme: dark) {
+    .options-dropdown {
+        background-color: #1f2937;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .dropdown-item {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .dropdown-item:hover {
+        background-color: #374151;
+    }
+
+    .dropdown-item svg {
+        color: rgba(255, 255, 255, 0.7);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .options-dropdown {
+        background-color: white;
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    .dropdown-item {
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    .dropdown-item:hover {
+        background-color: #f3f4f6;
+    }
+
+    .dropdown-item svg {
+        color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+.information-text {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 400;
+    padding: 20px;;
+    color: #fafafa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Nutrition label overlay styles */
+.nutrition-label-overlay {
+  position: absolute;
+  z-index: 9999;
+  background: rgba(255,255,255,0.98);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  padding: 0;
+  min-width: 520px;
+  max-width: 640px;
+  min-height: 240px;
+  color: #222;
+  font-family: 'Work Sans', Arial, sans-serif;
+  font-size: 34px;;
+  padding: 20px;;
+}
+
+.nutrition-label-overlay .close-nutrition-label {
+  background: none;
+  border: none;
+  font-size: 1.1em;
+  color: #888;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+.button-wrapper-NL {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.nutrition-label-overlay .close-nutrition-label:hover {
+  color: #d00;
+}
+
+.nutrition-label-overlay .name-wrapper-NL {
+    border-bottom: solid 3px lightgrey;
+    padding: 3px 0px 3px 0px;
+    margin-bottom: 10px;
+}
+
+.nutrition-label-overlay .name-NL {
+    font-weight: bold;
+}
+
+.nutrition-label-overlay .label-NL {
+    font-size: 22px;
+}
+
+.nutrition-label-overlay .serving.wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: solid 4px lightgrey;
+    padding: 3px 0px 3px 0px;
+}
+
+.nutrition-label-overlay .calories.wrapper {
+    flex-direction: column;
+    border-bottom: solid 4px lightgrey;
+    margin-bottom: 20px;;
+}
+
+.nutrition-label-overlay .wrapper .value {
+    font-weight: bold;
+}
+
+.nutrition-label-overlay .row {
+    display: flex;
+    font-size: 26px;
+    border-top: solid 2px lightgrey;
+    padding: 3px 0px 3px 0px;
+}
+
+.nutrition-label-overlay .row .value  {
+    margin-left: 10px;;
+}
+
+.nutrition-label-overlay .flex-row {
+    display: flex;
+    justify-content: space-between;
+}
