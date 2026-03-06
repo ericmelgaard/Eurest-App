@@ -1,0 +1,24 @@
+{
+  "name": "eurest-kiosk",
+  "version": "1.0.0",
+  "description": "A digital menu kiosk application",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "Wand Digital",
+  "license": "ISC",
+  "dependencies": {
+    "dexie": "^3.2.0",
+    "jquery": "^3.7.0",
+    "lodash": "^4.17.21",
+    "mathjs": "^11.0.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
