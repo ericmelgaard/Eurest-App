@@ -96,6 +96,13 @@ body {
   left: var(--spacing-md);
 }
 
+.app-header,
+.nav-modal,
+#back-to-stations,
+.skip-link {
+  display: none !important;
+}
+
 .app-header {
   position: sticky;
   top: 0;

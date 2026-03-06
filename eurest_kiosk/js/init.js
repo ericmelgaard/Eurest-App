@@ -19,15 +19,15 @@ var allowMenusOffline = false;
 var assetRotation = 0; //in degrees 0 or 270
 //webtrtion config
 var mealStations = ["A LA Minute", "Grill", "Pure", "Trattoria", "Rooted","World Flavours"]
-var mealStation = "World Flavors";
-var mealPeriod = "Lunch"; //blank for TRM Daypart
-var includeRecipes = false;
+var mealStation = "";
+var mealPeriod = "";
+var includeRecipes = true;
 var showPrice = true;
 var showProtein = false;
 var showDescription = true;
 var showPortions = false;
 var brandColor = "";
-var language = ""; //fr-FR
+var language = "";
 //mealstation name
 var staticMealStation = "";
 //daypart name
@@ -52,6 +52,7 @@ var Duration = "";
 var Partner_API = "webtrition";
 var Brand = "27985";
 var Establishment = "52814";
+var includeRecipes = true;
 var apiKey = "";
 //yyyy-mm-dd ex.2025-02-23
 var dateToRequest = "";

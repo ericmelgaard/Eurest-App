@@ -161,128 +161,105 @@ var IMSintegration;
         MenuLayout.prototype.fillDynamic = function (IMSItems, integrationItems) {
             var _this = this;
 
-            // Demo: Create sample data for rotation demo
-            const demoItems = [
-                { name: "Grilled Chicken Breast", icons: [{ name: "halal", fileName: "media/icon_halal.png" }] },
-                { name: "Mediterranean Quinoa Bowl", icons: [{ name: "vegetarian", fileName: "media/icon_vegetarian.png" }, { name: "withoutgluten", fileName: "media/icon_withoutgluten.png" }] },
-                { name: "Beef Stir Fry with Vegetables", icons: [{ name: "spicy", fileName: "media/icon_spicy.png" }] },
-                { name: "Salmon Teriyaki with Rice", icons: [{ name: "withoutdairy", fileName: "media/icon_withoutdairy.png" }] },
-                { name: "Vegan Buddha Bowl", icons: [{ name: "vegan", fileName: "media/icon_vegan.png" }, { name: "withoutgluten", fileName: "media/icon_withoutgluten.png" }] },
-                { name: "Turkey Club Sandwich", icons: [{ name: "halal", fileName: "media/icon_halal.png" }] },
-                { name: "Spicy Thai Curry", icons: [{ name: "spicy", fileName: "media/icon_spicy.png" }, { name: "vegetarian", fileName: "media/icon_vegetarian.png" }] },
-                { name: "Fish and Chips", icons: [] },
-                { name: "Mushroom Risotto", icons: [{ name: "vegetarian", fileName: "media/icon_vegetarian.png" }] },
-                { name: "BBQ Pulled Pork", icons: [{ name: "spicy", fileName: "media/icon_spicy.png" }] },
-                { name: "Greek Salad with Feta", icons: [{ name: "vegetarian", fileName: "media/icon_vegetarian.png" }] },
-                { name: "Chicken Tikka Masala", icons: [{ name: "spicy", fileName: "media/icon_spicy.png" }, { name: "halal", fileName: "media/icon_halal.png" }] }
-            ];
-
             _this.clearMenuItems(".asset-wrapper");
 
-            // Process items directly for demo
-            const allItems = demoItems;
+            if (!integrationItems || !integrationItems.stations || integrationItems.stations.length === 0) {
+                console.log('No integration items provided');
+                return;
+            }
 
-            //fill items for demo
-            allItems.forEach(function (each, idx) {
-                //change font sizes based on number of items
-                if (allItems.length <= 5) {
-                    each.fontSize = "74px"
-                }
-                if (allItems.length === 6) {
-                    each.fontSize = "66px"
-                }
-                if (allItems.length === 7) {
-                    each.fontSize = "50px"
-                }
-                if (allItems.length >= 8) {
-                    each.fontSize = "40px"
-                }
+            integrationItems.stations.forEach(function(stationData) {
+                var allItems = stationData.items || [];
 
-                // Use the name as-is for demo
-                each.name = each.name || "";
-                
-                // Split name into all but last word, and last word
-                var nameWords = (each.name || "").split(" ");
-                var maxChars;
-                // Estimate max chars based on font size
-                if (each.fontSize === "74px") {
-                    maxChars = 45;
-                } else if (each.fontSize === "66px") {
-                    maxChars = 50;
-                } else if (each.fontSize === "50px") {
-                    maxChars = 65;
-                } else if (each.fontSize === "40px") {
-                    maxChars = 75;
-                } else {
-                    maxChars = 30;
-                }
-                var nameJoined = nameWords.join(" ");
-                if (nameJoined.length > maxChars) {
-                    // Truncate and add ...
-                    var truncated = nameJoined.slice(0, maxChars - 3);
-                    // Avoid cutting in the middle of a word
-                    var lastSpace = truncated.lastIndexOf(" ");
-                    if (lastSpace > 0) {
-                        truncated = truncated.slice(0, lastSpace);
+                allItems.forEach(function (each, idx) {
+                    if (allItems.length <= 5) {
+                        each.fontSize = "74px"
                     }
-                    // Remove trailing space before ellipsis
-                    truncated = truncated.replace(/\s+$/, "");
-                    var truncatedWords = truncated.split(" ");
-                    if (truncatedWords.length > 1) {
-                        each.nameFirst = truncatedWords.slice(0, -1).join(" ");
-                        each.nameLast = truncatedWords[truncatedWords.length - 1] + "...";
-                        each.nameSpace = " ";
+                    if (allItems.length === 6) {
+                        each.fontSize = "66px"
+                    }
+                    if (allItems.length === 7) {
+                        each.fontSize = "50px"
+                    }
+                    if (allItems.length >= 8) {
+                        each.fontSize = "40px"
+                    }
+
+                    each.name = each.name || "";
+
+                    var nameWords = (each.name || "").split(" ");
+                    var maxChars;
+                    if (each.fontSize === "74px") {
+                        maxChars = 45;
+                    } else if (each.fontSize === "66px") {
+                        maxChars = 50;
+                    } else if (each.fontSize === "50px") {
+                        maxChars = 65;
+                    } else if (each.fontSize === "40px") {
+                        maxChars = 75;
+                    } else {
+                        maxChars = 30;
+                    }
+                    var nameJoined = nameWords.join(" ");
+                    if (nameJoined.length > maxChars) {
+                        var truncated = nameJoined.slice(0, maxChars - 3);
+                        var lastSpace = truncated.lastIndexOf(" ");
+                        if (lastSpace > 0) {
+                            truncated = truncated.slice(0, lastSpace);
+                        }
+                        truncated = truncated.replace(/\s+$/, "");
+                        var truncatedWords = truncated.split(" ");
+                        if (truncatedWords.length > 1) {
+                            each.nameFirst = truncatedWords.slice(0, -1).join(" ");
+                            each.nameLast = truncatedWords[truncatedWords.length - 1] + "...";
+                            each.nameSpace = " ";
+                        } else if (nameWords.length > 1) {
+                            each.nameFirst = nameWords.slice(0, -1).join(" ");
+                            each.nameLast = nameWords[nameWords.length - 1];
+                            each.nameSpace = " ";
+                        } else {
+                            each.nameFirst = "";
+                            each.nameLast = truncatedWords[0] + "...";
+                            each.nameSpace = "";
+                        }
                     } else if (nameWords.length > 1) {
                         each.nameFirst = nameWords.slice(0, -1).join(" ");
                         each.nameLast = nameWords[nameWords.length - 1];
                         each.nameSpace = " ";
                     } else {
                         each.nameFirst = "";
-                        each.nameLast = truncatedWords[0] + "...";
+                        each.nameLast = each.name;
                         each.nameSpace = "";
                     }
-                } else if (nameWords.length > 1) {
-                    each.nameFirst = nameWords.slice(0, -1).join(" ");
-                    each.nameLast = nameWords[nameWords.length - 1];
-                    each.nameSpace = " ";
-                } else {
-                    each.nameFirst = "";
-                    each.nameLast = each.name;
-                    each.nameSpace = "";
-                }
 
-                if (idx > 9) { return }
-                // Attach the entire item object for later use
-                each.nutritionObj = each;
+                    each.nutritionObj = each;
+                });
+
+                var formattedStationData = {
+                    station: stationData.station,
+                    items: allItems,
+                    stationId: stationData.stationId || _this.sanitizeId(stationData.station),
+                    iconLabels: integrationItems.iconLabels || {
+                        spicy: "Spicy",
+                        dairy: "Made without dairy",
+                        gluten: "Made without gluten",
+                        halal: "Halal",
+                        vegetarian: "Vegetarian",
+                        vegan: "Vegan"
+                    }
+                };
+
+                var page = Mustache.render(MenuLayout.stationWrapper, formattedStationData);
+                var $page = $(page);
+
+                $page.find('.item-wrapper').each(function (i) {
+                    if (formattedStationData.items && formattedStationData.items[i] && formattedStationData.items[i].nutritionObj) {
+                        $(this).data('nutrition', formattedStationData.items[i].nutritionObj);
+                    }
+                });
+
+                $(".asset-wrapper").append($page);
             });
-
-            // Create station data for demo
-            var stationData = {
-                station: "A La Minute",
-                items: allItems,
-                stationId: "demo-station",
-                iconLabels: {
-                    spicy: "Spicy",
-                    dairy: "Made without dairy",
-                    gluten: "Made without gluten",
-                    halal: "Halal",
-                    vegetarian: "Vegetarian",
-                    vegan: "Vegan"
-                }
-            };
-
-            // Render just the station content directly
-            var page = Mustache.render(MenuLayout.stationWrapper, stationData);
-            var $page = $(page);
-            
-            // Attach nutrition object to each .item-wrapper
-            $page.find('.item-wrapper').each(function (i) {
-                if (stationData.items && stationData.items[i] && stationData.items[i].nutritionObj) {
-                    $(this).data('nutrition', stationData.items[i].nutritionObj);
-                }
-            });
-            
-            $(".asset-wrapper").append($page);
         };
         
 

@@ -9,148 +9,7 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <header class="app-header">
-        <div class="container header-content">
-            <div id="nav-container" class="nav-container">
-                <div class="business-unit-display">
-                    <div class="business-unit-label">Business Unit</div>
-                    <div id="business-unit-name" class="business-unit-name">Not Selected</div>
-                </div>
-
-                <div class="nav-separator"></div>
-
-                <div id="quick-venue-dropdown" class="quick-venue-dropdown">
-                    <button id="venue-button" class="venue-button" aria-label="Select venue">
-                        <span id="venue-button-text">Select Venue</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
-                    </button>
-                    <div id="venue-dropdown-list" class="venue-dropdown-list"></div>
-                </div>
-
-                <button id="nav-modal-icon" class="nav-modal-icon" aria-label="Open navigation menu">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <rect x="3" y="3" width="7" height="7" rx="1"/>
-                        <rect x="14" y="3" width="7" height="7" rx="1"/>
-                        <rect x="3" y="14" width="7" height="7" rx="1"/>
-                        <rect x="14" y="14" width="7" height="7" rx="1"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div id="quick-date-dropdown" class="quick-date-dropdown">
-                <button id="date-button" class="date-button" aria-label="Select date">
-                    <span id="date-button-text">Today</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M6 9l6 6 6-6"/>
-                    </svg>
-                </button>
-                <div id="date-dropdown-list" class="date-dropdown-list">
-                    <div class="date-quick-options"></div>
-                    <div class="date-divider"></div>
-                    <div class="date-calendar-option">
-                        <label for="menu-date-picker" class="calendar-label">Select Other Date</label>
-                        <input type="date" id="menu-date-picker" class="calendar-picker" aria-label="Select menu date">
-                    </div>
-                </div>
-            </div>
-
-            <button id="back-to-stations" class="floating-home" aria-label="Return to stations">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                <span>Back to Stations</span>
-            </button>
-        </div>
-    </header>
-
-    <div id="nav-modal" class="nav-modal">
-        <div id="nav-modal-overlay" class="nav-modal-overlay"></div>
-        <div class="nav-modal-content">
-            <div class="nav-modal-header">
-                <h2 class="nav-modal-title">Navigation</h2>
-                <button id="nav-modal-close" class="nav-modal-close" aria-label="Close navigation">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"/>
-                        <line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div class="nav-modal-body">
-                <div class="nav-section">
-                    <h3 class="nav-section-title">Business Units</h3>
-                    <div class="nav-search-container">
-                        <svg class="nav-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="m21 21-4.35-4.35"/>
-                        </svg>
-                        <input type="text" id="sap-code-search" class="nav-search" placeholder="Search business units..." aria-label="Search business units">
-                    </div>
-                    <div class="nav-current-selection">
-                        <div class="nav-selection-label">Selected:</div>
-                        <div id="selected-sap-code-display" class="nav-selection-value">No Business Unit Selected</div>
-                    </div>
-                    <div id="sap-codes-list" class="nav-list"></div>
-                </div>
-
-                <div class="nav-section">
-                    <h3 class="nav-section-title">Venues</h3>
-                    <div class="nav-search-container">
-                        <svg class="nav-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="m21 21-4.35-4.35"/>
-                        </svg>
-                        <input type="text" id="venue-search" class="nav-search" placeholder="Search venues..." aria-label="Search venues">
-                    </div>
-                    <div class="nav-current-selection">
-                        <div class="nav-selection-label">Selected:</div>
-                        <div id="selected-venue-display" class="nav-selection-value">No Venue Selected</div>
-                    </div>
-                    <div id="venues-list" class="nav-list"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <main id="main-content" class="main-content">
-        <div id="landing-view" class="view active">
-            <div class="container">
-                <div class="view-header">
-                    <h2 class="view-title">Explore Our Stations</h2>
-                    <p class="view-subtitle">Choose a station to view available menu items</p>
-                </div>
-                <div id="stations-grid" class="stations-grid" role="list">
-                    <div class="loading-skeleton">
-                        <div class="skeleton-card"></div>
-                        <div class="skeleton-card"></div>
-                        <div class="skeleton-card"></div>
-                        <div class="skeleton-card"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="station-view" class="view">
-            <div class="container">
-                <div class="view-header">
-                    <h2 id="station-title" class="view-title"></h2>
-                    <p id="station-description" class="view-subtitle"></p>
-                </div>
-                <div id="menu-items-grid" class="menu-items-grid" role="list">
-                    <div class="loading-skeleton">
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                        <div class="skeleton-item"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
+    <div class="asset-wrapper blur"></div>
 
     <div id="item-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true" hidden>
         <div class="modal-overlay"></div>
@@ -318,7 +177,18 @@
         </svg>
     </button>
 
-
-    <script type="module" src="js/app.js"></script>
+    <script src="dependencies/jquery-3.7.0.min.js"></script>
+    <script src="dependencies/lodash.min.js"></script>
+    <script src="dependencies/mustache.min.js"></script>
+    <script src="dependencies/math.min.js"></script>
+    <script src="dependencies/dexie.min.js"></script>
+    <script src="dependencies/wandLib.js"></script>
+    <script src="js/rotationAnimations.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/integration.js"></script>
+    <script src="js/kiosk-config.js"></script>
+    <script src="js/inactivity-manager.js"></script>
+    <script src="js/menuLayout.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
