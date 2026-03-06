@@ -31,6 +31,11 @@ var IMSintegration;
             var _this = this;
             this.API = API;
 
+            if (window.integration) {
+                this.db = window.integration.db;
+                this.store = window.integration.store;
+            }
+
             this.setupEventListeners();
 
             if (isFullStart) {
@@ -172,6 +177,25 @@ var IMSintegration;
                         items: [],
                         stationId: _this.sanitizeId(stationName)
                     };
+                }
+
+                if (item.icons && Array.isArray(item.icons)) {
+                    item.icons = item.icons.map(function(icon) {
+                        if (typeof icon === 'string') {
+                            var iconName = icon.toLowerCase().replace(/\s+/g, '');
+                            return {
+                                name: icon,
+                                fileName: 'media/icon_' + iconName + '.png'
+                            };
+                        } else if (icon && !icon.fileName && icon.name) {
+                            var iconName = icon.name.toLowerCase().replace(/\s+/g, '');
+                            return {
+                                name: icon.name,
+                                fileName: 'media/icon_' + iconName + '.png'
+                            };
+                        }
+                        return icon;
+                    });
                 }
 
                 stationsMap[stationName].items.push(item);
