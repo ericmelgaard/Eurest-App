@@ -79,6 +79,7 @@ var IMSintegration;
         MenuLayout.prototype.fillDynamic = function (IMSItems, integrationItems) {
             var _this = this;
             var items = integrationItems.filter(function (item) {return !item.hidden;});
+
             var itemsByCategory = {};
             items.forEach(function(item) {
                 if (!itemsByCategory[item.category]) {
@@ -86,19 +87,187 @@ var IMSintegration;
                 }
                 itemsByCategory[item.category].push(item);
             });
-            console.log("Items by category (hidden: false):");
-            Object.keys(itemsByCategory).forEach(function(category) {
-                console.log("Category: " + category, itemsByCategory[category]);
-            });
-            //supported for mealTracker || webtrition || IMS || bonAppetit
-            // validateItems(IMSItems, mealStation, mealPeriod, menuType)
-            // validateItems(integrationItems)
-            // integrationItems.forEach(function (each) {
-            //     var menuItem = Mustache.to_html(MenuLayout.itemWrapper, each);
-            //     $(".asset-wrapper").append(menuItem);
-            //    })
+
+            _this.itemsByCategory = itemsByCategory;
+            _this.renderStationGrid();
+            _this.setupEventHandlers();
+
             return true;
         };
+
+        MenuLayout.prototype.renderStationGrid = function() {
+            var _this = this;
+            var $wrapper = $(".asset-wrapper");
+            $wrapper.empty();
+
+            var stationsHTML = '<div class="kiosk-container">';
+            stationsHTML += '<div class="kiosk-header">';
+            stationsHTML += '<h1 class="kiosk-title">Explore Our Stations</h1>';
+            stationsHTML += '<p class="kiosk-subtitle">Choose a station to view available menu items</p>';
+            stationsHTML += '</div>';
+            stationsHTML += '<div class="stations-grid">';
+
+            Object.keys(_this.itemsByCategory).forEach(function(category) {
+                stationsHTML += '<div class="station-card" data-category="' + category + '">';
+                stationsHTML += '<h2 class="station-name">' + category + '</h2>';
+                stationsHTML += '</div>';
+            });
+
+            stationsHTML += '</div></div>';
+            $wrapper.html(stationsHTML);
+        };
+
+        MenuLayout.prototype.renderStationItems = function(category) {
+            var _this = this;
+            var $wrapper = $(".asset-wrapper");
+            $wrapper.empty();
+
+            var items = _this.itemsByCategory[category] || [];
+
+            var itemsHTML = '<div class="kiosk-container">';
+            itemsHTML += '<div class="kiosk-header with-back">';
+            itemsHTML += '<button class="back-button" id="back-to-stations">';
+            itemsHTML += '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+            itemsHTML += '<path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
+            itemsHTML += '</button>';
+            itemsHTML += '<h1 class="kiosk-title">' + category + '</h1>';
+            itemsHTML += '</div>';
+            itemsHTML += '<div class="items-grid">';
+
+            items.forEach(function(item) {
+                itemsHTML += '<div class="menu-item-card" data-item-id="' + (item.id || item.name) + '">';
+                itemsHTML += '<div class="item-header">';
+                itemsHTML += '<h3 class="item-name">' + item.name + '</h3>';
+                itemsHTML += '<span class="item-price">' + (item.price || '$0.00') + '</span>';
+                itemsHTML += '</div>';
+
+                if (item.description) {
+                    itemsHTML += '<p class="item-desc">' + item.description + '</p>';
+                }
+
+                itemsHTML += '<div class="item-footer">';
+
+                if (item.calories) {
+                    itemsHTML += '<span class="item-cal">';
+                    itemsHTML += '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>';
+                    itemsHTML += item.calories + ' cal';
+                    itemsHTML += '</span>';
+                }
+
+                if (item.serving_size) {
+                    itemsHTML += '<span class="item-serving">' + item.serving_size + '</span>';
+                }
+
+                if (item.dietary_icons && item.dietary_icons.length > 0) {
+                    itemsHTML += '<div class="dietary-icons">';
+                    item.dietary_icons.forEach(function(icon) {
+                        itemsHTML += '<img src="media/icon_' + icon + '.png" alt="' + icon + '" class="dietary-icon">';
+                    });
+                    itemsHTML += '</div>';
+                }
+
+                itemsHTML += '</div></div>';
+            });
+
+            itemsHTML += '</div></div>';
+            $wrapper.html(itemsHTML);
+
+            _this.setupItemClickHandlers(items);
+        };
+
+        MenuLayout.prototype.setupEventHandlers = function() {
+            var _this = this;
+
+            $(document).off('click', '.station-card').on('click', '.station-card', function() {
+                var category = $(this).data('category');
+                _this.renderStationItems(category);
+            });
+
+            $(document).off('click', '#back-to-stations').on('click', '#back-to-stations', function() {
+                _this.renderStationGrid();
+            });
+        };
+
+        MenuLayout.prototype.setupItemClickHandlers = function(items) {
+            var itemsMap = {};
+            items.forEach(function(item) {
+                itemsMap[item.id || item.name] = item;
+            });
+
+            $(document).off('click', '.menu-item-card').on('click', '.menu-item-card', function() {
+                var itemId = $(this).data('item-id');
+                var item = itemsMap[itemId];
+                if (item) {
+                    showNutritionModal(item);
+                }
+            });
+        };
+
+        function showNutritionModal(item) {
+            var $modal = $('#item-modal');
+
+            $('#modal-title').text(item.name);
+            $('#modal-price').text(item.price || '$0.00');
+            $('#modal-calories').text(item.calories ? item.calories + ' calories' : '');
+            $('#modal-serving').text(item.serving_size || '');
+            $('#modal-description').text(item.description || '');
+
+            var iconsHTML = '';
+            if (item.dietary_icons && item.dietary_icons.length > 0) {
+                item.dietary_icons.forEach(function(icon) {
+                    iconsHTML += '<img src="media/icon_' + icon + '.png" alt="' + icon + '" class="dietary-icon">';
+                });
+            }
+            $('#modal-icons').html(iconsHTML);
+
+            $('#modal-ingredients').text(item.ingredients || 'Not available');
+
+            if (item.allergens && item.allergens.length > 0) {
+                $('#allergens-section').show();
+                $('#modal-allergens').text(item.allergens.join(', '));
+            } else {
+                $('#allergens-section').hide();
+            }
+
+            if (item.nutrition) {
+                var n = item.nutrition;
+                $('#nutrition-serving').text('Serving Size ' + (item.serving_size || '1 serving'));
+                $('#nutrition-calories').text(n.calories || '0');
+                $('#nutrition-fat').text(n.total_fat || '0');
+                $('#nutrition-fat-dv').text(n.total_fat_dv || '0');
+                $('#nutrition-sat-fat').text(n.saturated_fat || '0');
+                $('#nutrition-sat-fat-dv').text(n.saturated_fat_dv || '0');
+                $('#nutrition-trans-fat').text(n.trans_fat || '0');
+                $('#nutrition-cholesterol').text(n.cholesterol || '0');
+                $('#nutrition-cholesterol-dv').text(n.cholesterol_dv || '0');
+                $('#nutrition-sodium').text(n.sodium || '0');
+                $('#nutrition-sodium-dv').text(n.sodium_dv || '0');
+                $('#nutrition-carbs').text(n.total_carbohydrate || '0');
+                $('#nutrition-carbs-dv').text(n.total_carbohydrate_dv || '0');
+                $('#nutrition-fiber').text(n.dietary_fiber || '0');
+                $('#nutrition-fiber-dv').text(n.dietary_fiber_dv || '0');
+                $('#nutrition-sugars').text(n.total_sugars || '0');
+                $('#nutrition-protein').text(n.protein || '0');
+                $('#nutrition-vitamin-d').text(n.vitamin_d || '0');
+                $('#nutrition-vitamin-d-dv').text(n.vitamin_d_dv || '0');
+                $('#nutrition-calcium').text(n.calcium || '0');
+                $('#nutrition-calcium-dv').text(n.calcium_dv || '0');
+                $('#nutrition-iron').text(n.iron || '0');
+                $('#nutrition-iron-dv').text(n.iron_dv || '0');
+                $('#nutrition-potassium').text(n.potassium || '0');
+                $('#nutrition-potassium-dv').text(n.potassium_dv || '0');
+            }
+
+            $modal.removeAttr('hidden');
+
+            $('#modal-close').off('click').on('click', function() {
+                $modal.attr('hidden', true);
+            });
+
+            $('.modal-overlay').off('click').on('click', function() {
+                $modal.attr('hidden', true);
+            });
+        }
         MenuLayout.prototype.clearMenuItems = function (zone) {
             var containers = $(zone).get();
             containers.forEach(function (container) {
